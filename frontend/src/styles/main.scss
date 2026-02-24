@@ -1,0 +1,81 @@
+// 全局样式
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+}
+
+#app {
+  height: 100%;
+}
+
+// 通用卡片样式
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #303133;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e4e7ed;
+}
+
+// 金额高亮
+.amount-positive {
+  color: #f56c6c;
+}
+
+.amount-negative {
+  color: #67c23a;
+}
+
+// 状态标签
+.status-success {
+  color: #67c23a;
+}
+
+.status-warning {
+  color: #e6a23c;
+}
+
+.status-danger {
+  color: #f56c6c;
+}
+
+.status-info {
+  color: #909399;
+}
+
+// 表格样式优化
+.el-table {
+  .cell {
+    padding: 8px 12px;
+  }
+}
+
+// 响应式
+@media (max-width: 768px) {
+  .app-aside {
+    width: 64px !important;
+    
+    .logo span {
+      display: none;
+    }
+    
+    .el-menu-item span {
+      display: none;
+    }
+  }
+}
