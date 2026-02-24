@@ -1,0 +1,171 @@
+{
+  "project": "futu-ai-trading-system",
+  "version": "0.1.0",
+  "features": [
+    {
+      "id": "F001",
+      "module": "系统框架",
+      "feature": "持续运行AI系统框架",
+      "description": "Task.json任务管理 + Progress.md进度记录 + 自动Git提交",
+      "acceptance_criteria": [
+        ".ai/ 目录包含所有必需文件",
+        "AI可以读取任务列表并执行",
+        "进度可以被持久化记录"
+      ],
+      "status": "in_progress",
+      "tests": []
+    },
+    {
+      "id": "F002",
+      "module": "系统框架",
+      "feature": "Git版本管理",
+      "description": "自动初始化Git仓库，支持持续提交",
+      "acceptance_criteria": [
+        "GitHub仓库创建成功",
+        "代码可以正常推送",
+        "提交信息符合规范"
+      ],
+      "status": "pending",
+      "tests": ["git remote -v", "git log"]
+    },
+    {
+      "id": "F003",
+      "module": "后端",
+      "feature": "FastAPI基础框架",
+      "description": "FastAPI项目骨架，包含路由、配置、中间件",
+      "acceptance_criteria": [
+        "服务可以启动",
+        "访问 /docs 显示API文档",
+        "健康检查接口正常"
+      ],
+      "status": "pending",
+      "tests": ["curl http://localhost:8000/health"]
+    },
+    {
+      "id": "F004",
+      "module": "后端",
+      "feature": "富途OpenD客户端",
+      "description": "封装富途SDK，管理OpenD连接",
+      "acceptance_criteria": [
+        "可以连接OpenD",
+        "可以订阅行情",
+        "可以执行交易"
+      ],
+      "status": "pending",
+      "tests": [],
+      "requires_opend": true
+    },
+    {
+      "id": "F005",
+      "module": "后端-API",
+      "feature": "账户管理API",
+      "description": "资金查询、持仓查询、账户状态",
+      "acceptance_criteria": [
+        "GET /api/account/info 返回账户信息",
+        "GET /api/account/positions 返回持仓列表",
+        "响应格式统一规范"
+      ],
+      "status": "pending",
+      "tests": ["test_account_api.py"]
+    },
+    {
+      "id": "F006",
+      "module": "后端-API",
+      "feature": "行情API",
+      "description": "实时行情、K线数据、WebSocket推送",
+      "acceptance_criteria": [
+        "GET /api/market/quote/{stock_code} 返回行情",
+        "GET /api/market/kline/{stock_code} 返回K线",
+        "WebSocket /ws/market 支持实时推送"
+      ],
+      "status": "pending",
+      "tests": ["test_market_api.py"]
+    },
+    {
+      "id": "F007",
+      "module": "后端-API",
+      "feature": "交易API",
+      "description": "下单、撤单、订单查询、止损止盈",
+      "acceptance_criteria": [
+        "POST /api/trade/order 下单成功",
+        "DELETE /api/trade/order/{id} 撤单成功",
+        "GET /api/trade/orders 返回订单列表"
+      ],
+      "status": "pending",
+      "tests": ["test_trade_api.py"],
+      "requires_opend": true
+    },
+    {
+      "id": "F008",
+      "module": "前端",
+      "feature": "Vue3基础框架",
+      "description": "Vue3+Vite项目，包含路由、状态管理、UI组件库",
+      "acceptance_criteria": [
+        "npm run dev 可以启动开发服务器",
+        "页面可以正常访问",
+        "Element Plus组件可用"
+      ],
+      "status": "pending",
+      "tests": ["npm run build"]
+    },
+    {
+      "id": "F009",
+      "module": "前端-页面",
+      "feature": "账户管理页面",
+      "description": "账户信息展示、持仓列表",
+      "acceptance_criteria": [
+        "显示账户资金信息",
+        "显示持仓列表",
+        "数据实时刷新"
+      ],
+      "status": "pending",
+      "tests": ["tests/e2e/account.spec.ts"]
+    },
+    {
+      "id": "F010",
+      "module": "前端-页面",
+      "feature": "行情展示页面",
+      "description": "K线图、实时报价、股票搜索",
+      "acceptance_criteria": [
+        "显示股票K线图",
+        "显示实时报价",
+        "支持股票代码搜索"
+      ],
+      "status": "pending",
+      "tests": ["tests/e2e/market.spec.ts"]
+    },
+    {
+      "id": "F011",
+      "module": "前端-页面",
+      "feature": "交易下单页面",
+      "description": "买卖表单、订单管理",
+      "acceptance_criteria": [
+        "可以输入股票代码和数量",
+        "可以提交买入/卖出订单",
+        "显示订单列表和状态"
+      ],
+      "status": "pending",
+      "tests": ["tests/e2e/trade.spec.ts"]
+    },
+    {
+      "id": "F012",
+      "module": "测试",
+      "feature": "Playwright端到端测试",
+      "description": "自动化浏览器测试，验证核心功能",
+      "acceptance_criteria": [
+        "Playwright配置完成",
+        "基础测试用例编写完成",
+        "所有测试通过"
+      ],
+      "status": "pending",
+      "tests": ["npx playwright test"]
+    }
+  ],
+  "summary": {
+    "total": 12,
+    "completed": 0,
+    "in_progress": 1,
+    "pending": 11,
+    "requires_opend": 2
+  }
+}
