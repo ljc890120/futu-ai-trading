@@ -57,6 +57,7 @@ class OrderCreate(BaseModel):
     order_type: OrderType = OrderType.LIMIT
     price: float
     quantity: int
+    acc_id: Optional[str] = None  # 账户ID
     stop_price: Optional[float] = None  # 止损价格
     take_profit_price: Optional[float] = None  # 止盈价格
 
@@ -70,55 +71,28 @@ class OrderCancel(BaseModel):
 async def create_order(order: OrderCreate):
     """
     创建交易订单
-    
+
     - stock_code: 股票代码
     - side: 买卖方向 (BUY/SELL)
     - order_type: 订单类型
     - price: 价格
     - quantity: 数量
+    - acc_id: 账户ID（可选，默认使用活跃账户）
     - stop_price: 止损价（可选）
     - take_profit_price: 止盈价（可选）
     """
-    if not futu_client.is_connected:
-        # 返回模拟数据（开发模式）
-        import uuid
-        order_id = f"MOCK_{uuid.uuid4().hex[:8].upper()}"
-        
-        stock_names = {
-            "HK.00700": "腾讯控股",
-            "HK.09988": "阿里巴巴-SW",
-            "US.AAPL": "Apple Inc."
-        }
-        
-        return Order(
-            order_id=order_id,
-            stock_code=order.stock_code,
-            stock_name=stock_names.get(order.stock_code, "未知股票"),
-            side=order.side,
-            order_type=order.order_type,
-            price=order.price,
-            quantity=order.quantity,
-            filled_quantity=0,
-            status=OrderStatus.SUBMITTED,
-            created_at=datetime.now(),
-            updated_at=datetime.now()
-        )
-    
+    if not futu_client.is_connected or not futu_client.is_trade_enabled:
+        raise HTTPException(status_code=400, detail="交易权限未开启")
+
     try:
         result = await futu_client.place_order(
             stock_code=order.stock_code,
             side=order.side.value,
             price=order.price,
             quantity=order.quantity,
-            order_type=order.order_type.value
+            order_type=order.order_type.value,
+            acc_id=order.acc_id
         )
-        
-        # 如果有止损止盈，设置条件单
-        if order.stop_price:
-            await futu_client.set_stop_loss(order.stock_code, order.stop_price)
-        if order.take_profit_price:
-            await futu_client.set_take_profit(order.stock_code, order.take_profit_price)
-        
         return Order(**result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"下单失败: {str(e)}")

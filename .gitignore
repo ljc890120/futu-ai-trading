@@ -82,3 +82,12 @@ secrets/
 # 敏感配置
 backend/.env
 frontend/.env.local
+
+# 测试脚本（临时）
+backend/test_*.py
+
+# CodeBuddy 缓存
+.codebuddy/
+
+# Vite 缓存
+.vite/

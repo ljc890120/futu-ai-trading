@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = "INFO"
     
     # CORS配置
-    CORS_ORIGINS: List[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
+    CORS_ORIGINS: List[str] = ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:5174", "http://127.0.0.1:5174"]
     
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod

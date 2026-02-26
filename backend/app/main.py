@@ -14,24 +14,24 @@ from app.services.futu_client import futu_client
 async def lifespan(app: FastAPI):
     """应用生命周期管理"""
     # 启动时
-    print(f"🚀 {settings.APP_NAME} v{settings.APP_VERSION} 启动中...")
-    print(f"📊 富途OpenD配置: {settings.FUTU_HOST}:{settings.FUTU_PORT}")
-    
+    print(f"[START] {settings.APP_NAME} v{settings.APP_VERSION} 启动中...")
+    print(f"[INFO] 富途OpenD配置: {settings.FUTU_HOST}:{settings.FUTU_PORT}")
+
     # 尝试连接OpenD（如果可用）
     try:
         if futu_client.connect():
-            print("✅ OpenD连接成功")
+            print("[OK] OpenD连接成功")
         else:
-            print("⚠️ OpenD未连接，部分功能不可用")
+            print("[WARN] OpenD未连接，部分功能不可用")
     except Exception as e:
-        print(f"⚠️ OpenD连接失败: {e}")
-    
+        print(f"[WARN] OpenD连接失败: {e}")
+
     yield
-    
+
     # 关闭时
-    print("👋 关闭OpenD连接...")
+    print("[INFO] 关闭OpenD连接...")
     futu_client.close()
-    print("✅ 应用已关闭")
+    print("[OK] 应用已关闭")
 
 
 # 创建FastAPI应用
@@ -74,6 +74,7 @@ async def health_check():
     return {
         "status": "healthy",
         "opend_connected": futu_client.is_connected,
+        "trade_enabled": futu_client.is_trade_enabled,
         "version": settings.APP_VERSION
     }
 

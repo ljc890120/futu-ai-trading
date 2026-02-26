@@ -54,18 +54,20 @@ export const request = {
 export const api = {
   // 账户相关
   account: {
-    info: () => request.get('/account/info'),
-    positions: () => request.get('/account/positions'),
-    status: () => request.get('/account/status')
+    list: () => request.get('/account/list'),
+    info: (accId?: string) => request.get('/account/info', { params: { acc_id: accId } }),
+    positions: (accId?: string) => request.get('/account/positions', { params: { acc_id: accId } }),
+    status: () => request.get('/account/status'),
+    reconnect: () => request.post('/account/reconnect')
   },
-  
+
   // 行情相关
   market: {
     quote: (stockCode: string) => request.get(`/market/quote/${stockCode}`),
     kline: (stockCode: string, params?: any) => request.get(`/market/kline/${stockCode}`, { params }),
     search: (keyword: string) => request.get('/market/search', { params: { keyword } })
   },
-  
+
   // 交易相关
   trade: {
     createOrder: (data: any) => request.post('/trade/order', data),
